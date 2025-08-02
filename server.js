@@ -12,12 +12,7 @@ app.use(
   })
 );
 
-app.use(express.json());
 app.use(express.text());
-
-app.options('/', (req, res) => {
-  res.send();
-});
 
 app.post('/', (req, res) => {
   const body = req.body;
@@ -26,7 +21,11 @@ app.post('/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.json(data);
+  if (!data.message) {
+    res.json({ message: '메시지가 없습니다.' });
+  } else {
+    res.json(data);
+  }
 });
 
 app.put('/', (req, res) => {
@@ -36,7 +35,7 @@ app.put('/', (req, res) => {
 });
 
 app.delete('/', (req, res) => {
-  data = {};
+  data.message = '';
   res.send('데이터가 삭제되었습니다.');
 });
 
